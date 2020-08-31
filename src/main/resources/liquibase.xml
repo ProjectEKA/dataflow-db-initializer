@@ -1,0 +1,79 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="202002041401" author="apoorva" context="POC">
+        <preConditions>
+            <not>
+                <tableExists tableName="data_flow_request"/>
+            </not>
+        </preConditions>
+        <comment>Add data_flow_request table</comment>
+
+        <createTable tableName="data_flow_request">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="transaction_id" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="data_flow_request" type="JSON">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timestamp" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202003301500" author="apoorva" context="POC">
+        <preConditions>
+            <not>
+                <tableExists tableName="health_info_notification"/>
+            </not>
+        </preConditions>
+        <comment>Add health_info_notification table</comment>
+
+        <createTable tableName="health_info_notification">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="transaction_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notification_request" type="JSON">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="DATETIME" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="202004221835" author="apoorva" context="POC">
+        <addColumn tableName="data_flow_request">
+            <column name="consent_artefact_id" type="VARCHAR(50)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Apoorva" id="202004271430">
+        <addColumn tableName="health_info_notification">
+            <column name="request_id" type="VARCHAR(50)" defaultValue="">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Dheeraj_Mahendra" id="202006161423">
+        <addColumn tableName="data_flow_request">
+            <column name="status" type="VARCHAR(50)" defaultValue="PENDING">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
